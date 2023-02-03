@@ -35,7 +35,7 @@ function limparTabela() {
   }
 }
 
-function atualizarTabela() { // Adaptação da função atualizarTabela (5 pontos)
+function atualizarTabela() {
   limparTabela();
   const bd_clientes = getLocalStorage();
   let index = 0;
@@ -56,7 +56,7 @@ function atualizarTabela() { // Adaptação da função atualizarTabela (5 ponto
   }
 }
 
-function inserir() { // Adaptação da função inserir (10 pontos)
+function inserir() { 
   const cliente = {
     nome: document.getElementById('nome').value,
     email: document.getElementById('email').value,
@@ -69,14 +69,14 @@ function inserir() { // Adaptação da função inserir (10 pontos)
   atualizarTabela();
 }
 
-function excluir(index) { // Adaptação da função excluir (5 pontos)
+function excluir(index) { 
   const bd_clientes = getLocalStorage();
   bd_clientes.splice(index, 1);
   setLocalStorage(bd_clientes);
   atualizarTabela();
 }
 
-function validarCelular() { // Adaptação da função validar (10 pontos)
+function validarCelular() { 
   const bd_clientes = getLocalStorage();
   for (cliente of bd_clientes) {
     if (celular.value == cliente.celular) {
@@ -92,7 +92,7 @@ function validarCelular() { // Adaptação da função validar (10 pontos)
 }
 
 atualizarTabela();
-// Seleção dos elementos e adição do listener para validação customizada (5 pontos)
+
 const celular = document.getElementById("celular");
 const feedbackCelular = document.getElementById("feedbackCelular");
 celular.addEventListener('input', validarCelular);
