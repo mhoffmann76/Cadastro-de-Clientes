@@ -1,31 +1,33 @@
-(function() {
-  'use strict'
+(function () {
+  "use strict";
 
-  var forms = document.querySelectorAll('.needs-validation')
+  var forms = document.querySelectorAll(".needs-validation");
 
-  Array.prototype.slice.call(forms)
-    .forEach(function(form) {
-      form.addEventListener('submit', function(event) {
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
         if (!form.checkValidity()) {
-          form.classList.add('was-validated')
+          form.classList.add("was-validated");
         } else {
-          inserir()
-          form.classList.remove('was-validated')
-          form.reset()
+          inserir();
+          form.classList.remove("was-validated");
+          form.reset();
         }
-        event.preventDefault()
-        event.stopPropagation()
-      }, false)
-    })
-})()
-
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      false
+    );
+  });
+})();
 
 function getLocalStorage() {
-  return JSON.parse(localStorage.getItem('bd_clientes')) ?? [];
+  return JSON.parse(localStorage.getItem("bd_clientes")) ?? [];
 }
 
 function setLocalStorage(bd_clientes) {
-  localStorage.setItem('bd_clientes', JSON.stringify(bd_clientes));
+  localStorage.setItem("bd_clientes", JSON.stringify(bd_clientes));
 }
 
 function limparTabela() {
@@ -38,9 +40,9 @@ function limparTabela() {
 function atualizarTabela() {
   limparTabela();
   const bd_clientes = getLocalStorage();
-  let index = 0;
+  let index = 1;
   for (cliente of bd_clientes) {
-    const novaLinha = document.createElement('tr');
+    const novaLinha = document.createElement("tr");
     novaLinha.innerHTML = `
         <th scope="row">${index}</th>
         <td>${cliente.nome}</td>
@@ -50,33 +52,43 @@ function atualizarTabela() {
         <td>
             <button type="button" class="btn btn-danger" id="${index}" onclick="excluir(${index})">Excluir</button>
         </td>
-    `
-    document.querySelector('#tabela>tbody').appendChild(novaLinha)
+    `;
+    document.querySelector("#tabela>tbody").appendChild(novaLinha);
     index++;
   }
 }
 
-function inserir() { 
+function inserir() {
   const cliente = {
-    nome: document.getElementById('nome').value,
-    email: document.getElementById('email').value,
-    celular: document.getElementById('celular').value,
-    estado: document.getElementById('estado').value
-  }
+    nome: document.getElementById("nome").value,
+    email: document.getElementById("email").value,
+    celular: document.getElementById("celular").value,
+    estado: document.getElementById("estado").value,
+  };
   const bd_clientes = getLocalStorage();
   bd_clientes.push(cliente);
   setLocalStorage(bd_clientes);
   atualizarTabela();
 }
 
-function excluir(index) { 
+function excluir(index) {
   const bd_clientes = getLocalStorage();
-  bd_clientes.splice(index, 1);
+
+  bd_clientes.splice(index - 1, 1);
+
   setLocalStorage(bd_clientes);
   atualizarTabela();
 }
 
-function validarCelular() { 
+//bd_clientes.splice(index, 1);
+// setLocalStorage(bd_clientes);
+//atualizarTabela();
+
+function alterar(index) {
+  const bd_clientes = getLocalStorage();
+}
+
+function validarCelular() {
   const bd_clientes = getLocalStorage();
   for (cliente of bd_clientes) {
     if (celular.value == cliente.celular) {
@@ -95,4 +107,4 @@ atualizarTabela();
 
 const celular = document.getElementById("celular");
 const feedbackCelular = document.getElementById("feedbackCelular");
-celular.addEventListener('input', validarCelular);
+celular.addEventListener("input", validarCelular);
